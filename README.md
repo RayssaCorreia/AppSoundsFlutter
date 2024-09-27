@@ -19,7 +19,8 @@ Tests of sound with Flutter
 - [tutorial 3](https://medium.com/flutter-community/how-to-add-music-audio-to-your-flutter-app-dcb6162c32d7)
 
  ## Studings
- - What is beep file? [font](https://www.monolitonimbus.com.br/beep-music/)
- - Beep codes [font](https://www.computerhope.com/beep.htm)
- - Progam of modules beeps: [beep](https://linux.die.net/man/1/beep)
- - 
+
+- What is beep file? [font](https://www.monolitonimbus.com.br/beep-music/)
+- Beep codes [font](https://www.computerhope.com/beep.htm)
+- Progam of modules beeps: [beep](https://linux.die.net/man/1/beep)
+- Creat sounds: [onlinesequencer](https://onlinesequencer.net/) 

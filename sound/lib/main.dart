@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:record/record.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() {
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class PlayAudio extends StatefulWidget {
   const PlayAudio({super.key});
 
@@ -31,18 +29,21 @@ class PlayAudio extends StatefulWidget {
 }
 
 class _PlayAudioState extends State<PlayAudio> {
-
   final player = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
-    return const ElevatedButton(
+    return ElevatedButton(
       onPressed: () {
         playSound();
       },
         child: const Text("Press me")
     );
   }
-  void playSound() {
-  String audioPath = "audio/sound.mp3";
+
+  Future<void> playSound() async {
+    String audioPath = "sounds/sound2.mp3";
+    await player.play(AssetSource(audioPath));
   }
+
 }
