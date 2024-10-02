@@ -38,6 +38,7 @@ dependencies:
   record: ^4.4.4
   audioplayers: ^4.0.0
   just_audio: ^0.9.40
+  sound_generator: ^0.0.9
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +67,6 @@ flutter:
   - assets/sounds/sound2.mp3
   - assets/sounds/sound.wav
   - assets/sounds/sample-3s.mp3
-  - assets/sounds/Herege.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
