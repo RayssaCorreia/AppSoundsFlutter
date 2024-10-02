@@ -1,262 +1,122 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:sound_generator/sound_generator.dart';
-import 'package:sound_generator/waveTypes.dart';
+import 'package:just_audio/just_audio.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class MyPainter extends CustomPainter {
-  //         <-- CustomPainter class
-  final List<int> oneCycleData;
-
-  MyPainter(this.oneCycleData);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var i = 0;
-    List<Offset> maxPoints = [];
-
-    final t = size.width / (oneCycleData.length - 1);
-    for (var _i = 0, _len = oneCycleData.length; _i < _len; _i++) {
-      maxPoints.add(Offset(
-          t * i,
-          size.height / 2 -
-              oneCycleData[_i].toDouble() / 32767.0 * size.height / 2));
-      i++;
-    }
-
-    final paint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 1
-      ..strokeCap = StrokeCap.round;
-    canvas.drawPoints(PointMode.polygon, maxPoints, paint);
-  }
-
-  @override
-  bool shouldRepaint(MyPainter old) {
-    if (oneCycleData != old.oneCycleData) {
-      return true;
-    }
-    return false;
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  bool isPlaying = false;
-  double frequency = 40;
-  double balance = 0;
-  double volume = 1;
-  waveTypes waveType = waveTypes.SINUSOIDAL;
-  int sampleRate = 96000;
-  List<int>? oneCycleData;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Sound Generator Example'),
-            ),
-            body: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 20,
-                ),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("A Cycle's Snapshot With Real Data"),
-                      SizedBox(height: 2),
-                      Container(
-                          height: 100,
-                          width: double.infinity,
-                          color: Colors.white54,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 0,
-                          ),
-                          child: oneCycleData != null
-                              ? CustomPaint(
-                            painter: MyPainter(oneCycleData!),
-                          )
-                              : Container()),
-                      SizedBox(height: 2),
-                      Text("A Cycle Data Length is " +
-                          (sampleRate / this.frequency).round().toString() +
-                          " on sample rate " +
-                          sampleRate.toString()),
-                      SizedBox(height: 5),
-                      Divider(
-                        color: Colors.red,
-                      ),
-                      SizedBox(height: 5),
-                      CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.lightBlueAccent,
-                          child: IconButton(
-                              icon: Icon(
-                                  isPlaying ? Icons.stop : Icons.play_arrow),
-                              onPressed: () {
-                                isPlaying
-                                    ? SoundGenerator.stop()
-                                    : SoundGenerator.play();
-                              })),
-                      SizedBox(height: 5),
-                      Divider(
-                        color: Colors.red,
-                      ),
-                      SizedBox(height: 5),
-                      Text("Wave Form"),
-                      Center(
-                          child: DropdownButton<waveTypes>(
-                              value: this.waveType,
-                              onChanged: (waveTypes? newValue) {
-                                setState(() {
-                                  this.waveType = newValue!;
-                                  SoundGenerator.setWaveType(this.waveType);
-                                });
-                              },
-                              items:
-                              waveTypes.values.map((waveTypes classType) {
-                                return DropdownMenuItem<waveTypes>(
-                                    value: classType,
-                                    child: Text(
-                                        classType.toString().split('.').last));
-                              }).toList())),
-                      SizedBox(height: 5),
-                      Divider(
-                        color: Colors.red,
-                      ),
-                      SizedBox(height: 5),
-                      Text("Frequency"),
-                      Container(
-                          width: double.infinity,
-                          height: 40,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                      child: Text(
-                                          this.frequency.toStringAsFixed(2) +
-                                              " Hz")),
-                                ),
-                                Expanded(
-                                  flex: 8, // 60%
-                                  child: Slider(
-                                      min: 20,
-                                      max: 10000,
-                                      value: this.frequency,
-                                      onChanged: (_value) {
-                                        setState(() {
-                                          this.frequency = _value.toDouble();
-                                          SoundGenerator.setFrequency(
-                                              this.frequency);
-                                        });
-                                      }),
-                                )
-                              ])),
-                      SizedBox(height: 5),
-                      Text("Balance"),
-                      Container(
-                          width: double.infinity,
-                          height: 40,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                      child: Text(
-                                          this.balance.toStringAsFixed(2))),
-                                ),
-                                Expanded(
-                                  flex: 8, // 60%
-                                  child: Slider(
-                                      min: -1,
-                                      max: 1,
-                                      value: this.balance,
-                                      onChanged: (_value) {
-                                        setState(() {
-                                          this.balance = _value.toDouble();
-                                          SoundGenerator.setBalance(
-                                              this.balance);
-                                        });
-                                      }),
-                                )
-                              ])),
-                      SizedBox(height: 5),
-                      Text("Volume"),
-                      Container(
-                          width: double.infinity,
-                          height: 40,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                      child:
-                                      Text(this.volume.toStringAsFixed(2))),
-                                ),
-                                Expanded(
-                                  flex: 8, // 60%
-                                  child: Slider(
-                                      min: 0,
-                                      max: 1,
-                                      value: this.volume,
-                                      onChanged: (_value) {
-                                        setState(() {
-                                          this.volume = _value.toDouble();
-                                          SoundGenerator.setVolume(this.volume);
-                                        });
-                                      }),
-                                )
-                              ]))
-                    ]))));
+      title: 'beep',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: const Home(),
+    );
   }
+}
+
+class Home extends StatefulWidget{
+  const Home ({super.key});
 
   @override
-  void dispose() {
-    super.dispose();
-    SoundGenerator.release();
+  State<Home> createState() => _HomeState();
+}
+
+class CustomTextStyle {
+  static const TextStyle nameOfTextStyle = TextStyle(
+    fontSize: 24,
+    color: Colors.green,
+    fontWeight: FontWeight.bold,
+  );
+}
+
+class _HomeState extends State<Home> {
+  final player = AudioPlayer();
+  final player2 = AudioPlayer();
+
+  String formatDuration(Duration d) {
+    final minutes = d.inMinutes.remainder(60);
+    final seconds = d.inSeconds.remainder(60);
+    return "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2,"0")}";
   }
+
+  void handlePlayPause( ) {
+    if(player.playing){
+      player.pause();
+    } else {
+      player.play();
+    }
+  }
+
+  void handleSeek(double value) {
+    player.seek(Duration(seconds: value.toInt()));
+  }
+
+  Duration position = Duration.zero;
+  Duration duration = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    isPlaying = false;
 
-    SoundGenerator.init(sampleRate);
-
-    SoundGenerator.onIsPlayingChanged.listen((value) {
-      setState(() {
-        isPlaying = value;
-      });
+    player.setAsset('assets/beep/BPM120-R61-8BitSine.mp3');
+    player.positionStream.listen((p) {
+      setState(() => position = p);
     });
 
-    SoundGenerator.onOneCycleDataHandler.listen((value) {
-      setState(() {
-        oneCycleData = value;
-      });
+    player.durationStream.listen((d) {
+      setState(() => duration = d!);
     });
 
-    SoundGenerator.setAutoUpdateOneCycleSample(true);
-    //Force update for one time
-    SoundGenerator.refreshOneCycleData();
+    player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        setState(() {
+          position = Duration.zero;
+        });
+        player.pause();
+        player.seek(position);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+            'BEEPS'
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('1',
+              style: CustomTextStyle.nameOfTextStyle,
+            ),
+            Text(formatDuration(position)),
+            Slider(
+              min: 0.0,
+              max: duration.inSeconds.toDouble(),
+              value: position.inSeconds.toDouble(),
+              onChanged: handleSeek,
+            ),
+            Text(formatDuration(duration)),
+            IconButton(
+              icon: Icon(player.playing ? Icons.pause : Icons.play_arrow),
+              onPressed: handlePlayPause,
+            ),
+
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -67,6 +67,12 @@ flutter:
   - assets/sounds/sound2.mp3
   - assets/sounds/sound.wav
   - assets/sounds/sample-3s.mp3
+  - assets/beep/BPM+30-8BitTriangle.mp3
+  - assets/beep/BPM120-R61-8BitSine.mp3
+  - assets/beep/BPM120-R61-8BitSquare.mp3
+  - assets/beep/BPM120-R61-8BitTriangle.mp3
+  - assets/beep/BPM120-R61-Scifi.mp3
+  - assets/beep/tecladoBPM.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
