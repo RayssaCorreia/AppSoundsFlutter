@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if(isRecording)
-              Text(
+               Text(
                 'Recording in Progress',
                 style: TextStyle(
                   fontSize: 20,

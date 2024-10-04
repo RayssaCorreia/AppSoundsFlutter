@@ -41,14 +41,21 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
 
   cupertino_icons: ^1.0.8
-  record: ^4.4.4
+  sound_generator: ^0.0.9
+
   audioplayers: ^4.0.0
-  just_audio: ^0.9.40
+  record: ^4.4.4
+
   assets_audio_player: ^3.1.1
   flutter_neumorphic:
     git:
       url: https://github.com/den0206/Flutter-Neumorphic.git
       ref: feature/remoce_accentcolor
+
+  just_audio: ^0.9.40
+  audio_session: ^0.1.21
+  flutter_beep: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +92,8 @@ flutter:
   - assets/sounds/beepbeepbeep-53921.mp3
   - assets/images/Avatar-F&K.png
   - assets/beep/BPM120140-R651-Scifi.mp3
+  - assets/beep/Scifi-B7-130.mp3
+  - assets/beep/8-Bit-Sine-B6-130.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

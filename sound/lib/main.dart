@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'src/widgets/assetsAudioPlayerLib/libAssetsAudioPlayer.dart';
 import 'src/widgets/justAudioLib/libJustAudioPlayer.dart';
 import 'src/widgets/audioPlayersLib/libAudioPlayers.dart';
+import 'src/widgets/soundGenerator/libSoundGenerator.dart';
+import 'src/widgets/flutterBeepLib/libFlutterBeep.dart';
 
 void main() {
 
@@ -89,13 +91,37 @@ final ButtonStyle style =
                 ),
                 ElevatedButton(
                   style: style,
-                  child: const Text('Audio Players ',
+                  child: const Text('Audio Players',
                     style: CustomTextStyle.nameOfTextStyle,
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const LibAudioPlayers()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: style,
+                  child: const Text('Sound Generator',
+                    style: CustomTextStyle.nameOfTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LibSoundGenerator()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: style,
+                  child: const Text('Flutter Beep',
+                    style: CustomTextStyle.nameOfTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LibFlutterBeep()),
                     );
                   },
                 ),

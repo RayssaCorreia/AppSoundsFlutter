@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'player.dart';
-import 'playlistPlayers.dart';
+import 'beepsPlaylist.dart';
 
 class LibJustAudio extends StatefulWidget {
   const LibJustAudio({super.key});
@@ -56,13 +56,13 @@ class _LibJustAudioState extends State<LibJustAudio> {
                 ),
                 ElevatedButton(
                   style: style,
-                  child: const Text('Playlist Players',
+                  child: const Text('Beep Playlist',
                     style: CustomTextStyle.nameOfTextStyle,
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PlaylistPlayers()),
+                      MaterialPageRoute(builder: (context) => const BeepsPlaylist()),
                     );
                   },
                 ),
