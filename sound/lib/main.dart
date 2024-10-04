@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+
+
+import 'src/widgets/assetsAudioPlayerLib/libAssetsAudioPlayer.dart';
+import 'src/widgets/justAudioLib/libJustAudioPlayer.dart';
+import 'src/widgets/audioPlayersLib/libAudioPlayers.dart';
 
 void main() {
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,60 +33,17 @@ class Home extends StatefulWidget{
 
 class CustomTextStyle {
   static const TextStyle nameOfTextStyle = TextStyle(
-    fontSize: 24,
-    color: Colors.green,
+    fontSize: 20,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   );
 }
 
 class _HomeState extends State<Home> {
-  final player = AudioPlayer();
-  final player2 = AudioPlayer();
-
-  String formatDuration(Duration d) {
-    final minutes = d.inMinutes.remainder(60);
-    final seconds = d.inSeconds.remainder(60);
-    return "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2,"0")}";
-  }
-
-  void handlePlayPause( ) {
-    if(player.playing){
-      player.pause();
-    } else {
-      player.play();
-    }
-  }
-
-  void handleSeek(double value) {
-    player.seek(Duration(seconds: value.toInt()));
-  }
-
-  Duration position = Duration.zero;
-  Duration duration = Duration.zero;
-
-  @override
-  void initState() {
-    super.initState();
-
-    player.setAsset('assets/beep/BPM120-R61-8BitSine.mp3');
-    player.positionStream.listen((p) {
-      setState(() => position = p);
-    });
-
-    player.durationStream.listen((d) {
-      setState(() => duration = d!);
-    });
-
-    player.playerStateStream.listen((state) {
-      if (state.processingState == ProcessingState.completed) {
-        setState(() {
-          position = Duration.zero;
-        });
-        player.pause();
-        player.seek(position);
-      }
-    });
-  }
+final ButtonStyle style =
+    ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xff00dbff),
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -90,33 +51,61 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-            'BEEPS'
+            'LIBRARIES OF SOUNDS'
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('1',
-              style: CustomTextStyle.nameOfTextStyle,
+        child: Center(
+          child: Container(
+            width: 800,
+            height: 10000,
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                ElevatedButton(
+                  style: style,
+                  child: const Text('Assets Audio player',
+                  style: CustomTextStyle.nameOfTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LibAssetsAudioPlayer()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: style,
+                  child: const Text('Just Audio',
+                  style: CustomTextStyle.nameOfTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LibJustAudio()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: style,
+                  child: const Text('Audio Players ',
+                    style: CustomTextStyle.nameOfTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LibAudioPlayers()),
+                    );
+                  },
+                ),
+              ],
             ),
-            Text(formatDuration(position)),
-            Slider(
-              min: 0.0,
-              max: duration.inSeconds.toDouble(),
-              value: position.inSeconds.toDouble(),
-              onChanged: handleSeek,
-            ),
-            Text(formatDuration(duration)),
-            IconButton(
-              icon: Icon(player.playing ? Icons.pause : Icons.play_arrow),
-              onPressed: handlePlayPause,
-            ),
-
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+

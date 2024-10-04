@@ -30,19 +30,30 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  rxdart: ^0.27.3
+  dio: ^4.0.0-beta7
+  path_provider: ^2.0.1
+  http: ^0.13.0
+  provider: ^6.0.0
+  file: ^6.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+
   cupertino_icons: ^1.0.8
   record: ^4.4.4
   audioplayers: ^4.0.0
   just_audio: ^0.9.40
-  sound_generator: ^0.0.9
+  assets_audio_player: ^3.1.1
+  flutter_neumorphic:
+    git:
+      url: https://github.com/den0206/Flutter-Neumorphic.git
+      ref: feature/remoce_accentcolor
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic: ^1.11.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -64,15 +75,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/sounds/sound2.mp3
-  - assets/sounds/sound.wav
-  - assets/sounds/sample-3s.mp3
   - assets/beep/BPM+30-8BitTriangle.mp3
   - assets/beep/BPM120-R61-8BitSine.mp3
   - assets/beep/BPM120-R61-8BitSquare.mp3
   - assets/beep/BPM120-R61-8BitTriangle.mp3
   - assets/beep/BPM120-R61-Scifi.mp3
-  - assets/beep/tecladoBPM.mp3
+  - assets/beep/keyboardBPM.mp3
+  - assets/sounds/ding-101492.mp3
+  - assets/sounds/beepbeepbeep-53921.mp3
+  - assets/images/Avatar-F&K.png
+  - assets/beep/BPM120140-R651-Scifi.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
